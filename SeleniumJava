@@ -1,0 +1,57 @@
+package Selenium;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class LaunchChrome {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\IND\\Downloads\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://www.tendable.com/");
+		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+		
+		driver.manage().window().maximize();
+		driver.getTitle();
+		driver.findElement(By.linkText("a[href='https://www.tendable.com/our-story']")).click();
+		driver.findElement(By.xpath("//a[contains(text(),'Our Solution')]")).click();
+		driver.findElement(By.xpath("//a[contains(text(),'Why Tendable?')]")).click();
+		driver.findElement(By.xpath("//a[contains(text(),'Request a Demo')]")).click();
+		driver.findElement(By.xpath("//a[contains(text(),'Contact Us')]")).click();
+		try {
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		//Scroll down
+		jse.executeScript("window.scrollBy(0, 1500);");
+		Thread.sleep(3000);
+		
+		jse.executeScript("window.scrollBy(0, 1500);");
+		Thread.sleep(3000);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		driver.findElement(By.xpath("//button[text()='Contact']//parent::div[@class='flex flex-wrap w-full items-center justify-center mt-6']//preceding sibling::div[@class='text-center']//div[@text()='Marketing']']")).click();
+		driver.findElement(By.xpath("//input[@type='text' and @name='q']")).sendKeys("Mallika");
+		driver.findElement(By.xpath("//input[@placeholder='Organisation Name ']")).sendKeys("Infosys");
+		driver.findElement(By.xpath("//input[@placeholder='Phone Number']")).sendKeys("123456");
+		driver.findElement(By.xpath("//input[@id='form-input-email' and @placeholder='Email']")).sendKeys("abc@gmail.com");
+		WebElement dropdown= driver.findElement(By.xpath("//select[@name='jobRole']"));
+		Select selectObject = new Select(dropdown);
+		selectObject.selectByValue("Executive Board Member");
+		
+		driver.findElement(By.xpath("//input[@value='Consent Agreed']")).click();
+		driver.findElement(By.xpath("//button[text()='Submit']")).click();
+		
+		finally {
+			driver.close();
+		}
+	}
+}
